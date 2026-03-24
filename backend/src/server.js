@@ -13,7 +13,7 @@ import { ENV } from "./lib/env.js";
 const app = express();
 const __dirname = path.resolve();
 
-const PORT = ENV.PORT || 3000;
+const PORT = ENV.PORT || 5005;
 
 app.use(express.json()); // for parsing the json data that is comming from body
 app.use(cookieParser());
