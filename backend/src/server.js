@@ -8,17 +8,21 @@ import messageRoutes from "./routes/message.route.js";
 import { connectDB } from "./lib/db.js";
 import { ENV } from "./lib/env.js";
 import cors from "cors";
+import { app, server } from "./lib/socket.js";
 
 //dotenv.config();
 
-const app = express();
 const __dirname = path.resolve();
 
 const PORT = ENV.PORT || 5005;
 
-app.use(express.json()); // for parsing the json data that is comming from body
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://chat-app-pegion-7.onrender.com",
+];
+app.use(express.json({ limit : "5mb"})); // for parsing the json data that is comming from body
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(cookieParser());
@@ -35,7 +39,7 @@ if (ENV.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`server running on port: ${PORT}`);
   connectDB();
 });
